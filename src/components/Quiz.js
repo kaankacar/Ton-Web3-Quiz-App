@@ -41,7 +41,7 @@ const Quiz = () => {
           <br></br>
           Answer 5 questions correctly and Win A Special NFT
           <br></br>
-          Let's get started by copying your wallet address. Note that if you type anything other than a wallet address
+          Let's get started by copying your wallet address.
           <br></br>
           Wallet Address:
           <input
