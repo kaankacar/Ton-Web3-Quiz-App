@@ -11,11 +11,18 @@ const Quiz = () => {
   });
   const [walletAddress, setWalletAddress] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setActiveQuestion(0);
+    const response = await fetch(`https://testnet.toncenter.com/api/v2/getAddressInformation?address=${walletAddress}`)
+      .then(res => res.json());
+    if (response && response.addressInfo) {
+      setActiveQuestion(0);
+    }
+    else {
+      console.log("Address information not found or invalid");
+      // setError("Invalid wallet address. Please enter a valid TON wallet address.");
+    }
   };
-
   const onClickNext = () => {
     if (selectedAnswer === quiz.questions[activeQuestion].correctAnswer) {
       setResult({
@@ -66,26 +73,29 @@ const Quiz = () => {
             <div>
               <h2>Congratulations!</h2>
               <p>
-                You have completed the quiz with a score of {result.score} out of{" "}
-                {quiz.questions.length}.
+                You have completed the quiz with a score of {result.score} out
+                of {quiz.questions.length}.
               </p>
               <p>
                 You got {result.correctAnswers} questions right and{" "}
                 {result.wrongAnswers} questions wrong.
               </p>
               <p>
-                You've won a special NFT. It'll be airdropped to your wallet address shortly. <br></br>You can use your NFT to use various facilities in your campus.
+                You've won a special NFT. It'll be airdropped to your wallet
+                address shortly. <br></br>You can use your NFT to use various
+                facilities in your campus.
               </p>
             </div>
           ) : (
             <div>
               <h2>Quiz completed</h2>
               <p>
-                Because you didn't answer all the questions correctly, the special NFT that you can use in your campus won't be awarded.
+                Because you didn't answer all the questions correctly, the
+                special NFT that you can use in your campus won't be awarded.
               </p>
               <p>
-                You have completed the quiz with a score of {result.score} out of{" "}
-                {quiz.questions.length}.
+                You have completed the quiz with a score of {result.score} out
+                of {quiz.questions.length}.
               </p>
               <p>
                 You got {result.correctAnswers} questions right and{" "}
@@ -116,7 +126,7 @@ const Quiz = () => {
         </div>
       )}
     </>
-  );  
+  );
 };
 
 export default Quiz;
